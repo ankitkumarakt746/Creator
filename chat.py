@@ -2,7 +2,7 @@ import os
 import socket
 import threading
 
-localIP = '192.168.29.166'
+localIP = ''
 localPort = 5555
 targetIP = ''
 targetPort = localPort
@@ -13,6 +13,11 @@ def cleaner():
 	elif os.name == 'posix':
 		os.system('firewall-cmd --add-port=' + str(localPort) + '/udp > /dev/null 2>&1')
 		os.system('clear')
+
+def get_localIP():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("8.8.8.8", 80))
+    return s.getsockname()[0]
 
 class rec():
 	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -35,6 +40,7 @@ class rec():
 
 
 while True:
+	localIP = get_localIP()
 	recObj = rec()
 	t = threading.Thread(target = recObj.run)
 	t.start()
@@ -46,6 +52,7 @@ while True:
 	print("*         Welcome To Phoenix Chat          *")
 	print("*                                          *")
 	print("********************************************")
+	print('\nYour ip: ', localIP)
 	targetIP = input('Enter target IP: ')
 	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 	print('\nPress 0 to exit.\n')
