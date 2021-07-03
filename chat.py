@@ -7,7 +7,7 @@ import threading
 localIP = ''
 localPort = 7555
 targetIP = ''
-targetPort = 7556
+targetPort = 7555
 
 
 class Reciever:
